@@ -13,7 +13,7 @@ endif()
 
 cmake_minimum_required(VERSION 3.12)
 ### Setup project name and language
-project(GL_3component CXX)
+project(LondonModel_3component CXX)
 
 # Make sure we use GL's own find modules
 list(INSERT CMAKE_MODULE_PATH 0  ${PROJECT_SOURCE_DIR}/cmake)
