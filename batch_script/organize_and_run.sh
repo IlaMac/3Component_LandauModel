@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASEDIR=${HOME}/3Component_LondonModel
-SCRIPT_DIR=${BASEDIR}/3Component_LondonModel/batch_script
+SCRIPT_DIR=${BASEDIR}/batch_script
 
 cd /tmp/
 
@@ -21,7 +21,7 @@ H_rho=1
 H_eta=1 
 H_e=0.5
 H_h=1
-H_nu=0
+H_nu=0.2
 H_blow=0.5
 H_bhigh=5.0
 
@@ -87,7 +87,7 @@ if [ ! -d ./SL${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blo
    mkdir -p L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 fi
 
-OUTPUT_TEMP=/tmp/Output_x_ilaria/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_a${H_a}_b${H_b}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
+OUTPUT_TEMP=/tmp/Output_x_ilaria/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 
 cd ${OUTPUT}
 
