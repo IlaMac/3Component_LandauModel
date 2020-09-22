@@ -1,2 +1,2 @@
-# 3Component_LandauModel
-Landau Model for a 3 component SC with Josephson and Andreev-Bashkin interaction
+# 3Component_LondonModel
+London Model for a 3 component SC with Josephson and Andreev-Bashkin interaction
