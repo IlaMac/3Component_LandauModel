@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BASEDIR=${HOME}/3Component_LandauModel
-SCRIPT_DIR=${BASEDIR}/3Component_LandauModel/batch_script
+BASEDIR=${HOME}/3Component_LondonModel
+SCRIPT_DIR=${BASEDIR}/3Component_LondonModel/batch_script
 
 cd /tmp/
 
@@ -51,11 +51,17 @@ fi
 
 cd nu_${H_nu}
 
+if [ ! -d ./Sh_${H_h} ]; then
+   mkdir -p h_${H_h}
+fi
+
+cd h_${H_h}
+
 if [ ! -d ./SL${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh} ]; then
    mkdir -p L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 fi
 
-OUTPUT=${BASEDIR}/Output_3C/e_${H_e}/nu_${H_nu}/L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
+OUTPUT=${BASEDIR}/Output_3C/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 
 cd /tmp/Output_x_ilaria
 
@@ -71,11 +77,17 @@ fi
 
 cd nu_${H_nu}
 
+if [ ! -d ./Sh_${H_h} ]; then
+   mkdir -p h_${H_h}
+fi
+
+cd h_${H_h}
+
 if [ ! -d ./SL${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh} ]; then
    mkdir -p L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 fi
 
-OUTPUT_TEMP=/tmp/Output_x_ilaria/e_${H_e}/nu_${H_nu}/L${L}_a${H_a}_b${H_b}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
+OUTPUT_TEMP=/tmp/Output_x_ilaria/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_a${H_a}_b${H_b}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}
 
 cd ${OUTPUT}
 
