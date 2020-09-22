@@ -22,8 +22,8 @@ H_eta=1
 H_e=0.5
 H_h=1
 H_nu=0
-H_blow=0.2165
-H_bhigh=0.2195
+H_blow=0.5
+H_bhigh=5.0
 
 ############ Parameters for the Monte Carlo simulations --> MC_init.txt#####################
 
@@ -142,7 +142,7 @@ echo "#!/bin/bash
 #SBATCH --output=${DIR_PAR}/logs/log_${jobname}.o
 #SBATCH --error=${DIR_PAR}/logs/log_${jobname}.e
 
-srun ${EXECUTE_DIR}/GL_3component ${L} ${DIR_PAR} ${DIR_PAR} ${RESTART} &> ${DIR_PAR}/logs/log_${jobname}.o
+srun ${EXECUTE_DIR}/LondonModel_3component ${L} ${DIR_PAR} ${DIR_PAR} ${RESTART} &> ${DIR_PAR}/logs/log_${jobname}.o
 
 " >  submit_run
 
