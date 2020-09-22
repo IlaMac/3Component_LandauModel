@@ -248,7 +248,7 @@ void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters 
         t_measures.toc();
 
         t_h5pp.tic();
-        file.appendTableEntries(mis, "Measurements");
+        file.appendTableRecords(mis, "Measurements");
         t_h5pp.toc();
         MPI_Barrier(MPI_COMM_WORLD);
 
