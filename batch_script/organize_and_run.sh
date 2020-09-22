@@ -19,11 +19,11 @@ LLIST="8 10 12"
 ############ Parameters of the Hamiltonian ---> HP_init.txt in a directory whose name contains the main parameters values##################
 H_rho=1
 H_eta=1 
-H_e=0.5
+H_e=0
 H_h=1
-H_nu=0.2
-H_blow=0.5
-H_bhigh=5.0
+H_nu=0
+H_blow=0.01
+H_bhigh=1.0
 
 ############ Parameters for the Monte Carlo simulations --> MC_init.txt#####################
 
