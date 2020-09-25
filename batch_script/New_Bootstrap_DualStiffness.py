@@ -19,13 +19,14 @@ nbeta=int(sys.argv[4])
 e=float(sys.argv[5])
 h=(sys.argv[6])
 nu=float(sys.argv[7])
+eta=(sys.argv[8])
 if( (nu).is_integer()): nu=int(nu)
 if( (e).is_integer()): e=int(e)
 #if( (h).is_integer()): h=int(h)
 
 
 L=[]
-for ind in range(8, len(sys.argv)):
+for ind in range(9, len(sys.argv)):
     L.append(int(sys.argv[ind]))
 
 beta=np.zeros((nbeta))
@@ -56,7 +57,7 @@ for l in range(len(L)):
 
     N_dataset=100
 
-    BASEDIR=("%s/L%d_rho1_eta1_e%s_h%s_nu%s_bmin%s_bmax%s"  %(folder_out, L[l], e,  h, nu, beta_low, beta_high))
+    BASEDIR=("%s/L%d_rho1_eta%s_e%s_h%s_nu%s_bmin%s_bmax%s"  %(folder_out, L[l], eta, e,  h, nu, beta_low, beta_high))
 
     data_tau_max=np.loadtxt("%s/tau_max.txt" %BASEDIR, dtype=np.str)
     tau_max=np.amax(np.array(data_tau_max[1], dtype=np.float))
