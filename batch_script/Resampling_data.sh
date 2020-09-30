@@ -11,20 +11,20 @@
 ############# Parameters of the Hamiltonian ##################
 H_rho=1
 H_eta=1
-H_e=0
+H_e=0.5
 H_h=1
-H_nu=50
-H_blow=50.0
-H_bhigh=200.0
+H_nu=0
+H_blow=0.4
+H_bhigh=0.45
 
 
 nbeta=32
 
 #LList="\"[[8] [10]]\""
 
-LList=("8 10 12")
+LList=("8 10")
 
-BASEDIR="/Users/ilaria/Desktop/3Component_LandauModel/Output_3C/e_${H_e}/nu_${H_nu}/h_${H_h}"
+BASEDIR="/Users/ilaria/Desktop/3Component_LondonModel/Output_3C/e_${H_e}/nu_${H_nu}/h_${H_h}"
 #BASEDIR="/Users/ilaria/Desktop/New_Test/Output_3C/e_${H_e}/nu_${H_nu}"
 
 
@@ -36,9 +36,8 @@ done
 
 
 
-python3 New_Bootstrap_Energy.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${LList[@]}
-python3 New_Bootstrap_HelicityModulus.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${LList[@]}
-python3 New_Bootstrap_Magnetization.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${LList[@]}
-python3 New_Bootstrap_DualStiffness.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${LList[@]}
-python3 New_Bootstrap_PsiDensity.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${LList[@]}
+python3 New_Bootstrap_Energy.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${H_eta} ${LList[@]}
+python3 New_Bootstrap_HelicityModulus.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${H_eta} ${LList[@]}
+python3 New_Bootstrap_Magnetization.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${H_eta} ${LList[@]}
+python3 New_Bootstrap_DualStiffness.py ${BASEDIR} ${H_blow} ${H_bhigh} ${nbeta} ${H_e} ${H_h} ${H_nu} ${H_eta} ${LList[@]}
 
