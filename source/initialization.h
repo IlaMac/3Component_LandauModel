@@ -37,7 +37,7 @@ struct H_parameters{
     double nu;
     double b_low; //lowest beta for the parallel tempering procedure
     double b_high; // highest beta for the parallel tempering procedure
-
+    int init;
 };
 
 struct PT_parameters{
