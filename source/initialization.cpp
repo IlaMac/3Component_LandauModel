@@ -17,6 +17,7 @@ void initialize_Hparameters(struct H_parameters &Hp, const fs::path & directory_
             fscanf(fin, "%lf" , &Hp.nu);
             fscanf(fin, "%lf" , &Hp.b_low);
             fscanf(fin, "%lf" , &Hp.b_high);
+            fscanf(fin, "%d" , &Hp.init);
             fclose(fin);
             //With this modification Hp.beta in not anymore part of the Hamiltonian parameters list
         }
@@ -28,6 +29,7 @@ void initialize_Hparameters(struct H_parameters &Hp, const fs::path & directory_
         Hp.nu=0.1;
         Hp.b_low=0.244;
         Hp.b_high=0.247;
+        Hp.init=1;
     }
 
 }
@@ -83,13 +85,25 @@ void initialize_lattice(struct Node* Site, const fs::path & directory_read, int 
             fclose(fPsi);
         }
     }else{
-        for(i=0; i<N; i++){
-            for(alpha=0; alpha<3; alpha++){
-                Site[i].Psi[alpha].r=1.;
-                Site[i].Psi[alpha].t=0.;
-                polar_to_cartesian(Site[i].Psi[alpha]);
+        if(Hp.init==0) {
+            for (i = 0; i < N; i++) {
+                for (alpha = 0; alpha < 3; alpha++) {
+                    Site[i].Psi[alpha].r =1;
+                    Site[i].Psi[alpha].t = 0.;
+                    polar_to_cartesian(Site[i].Psi[alpha]);
+                }
             }
         }
+        else if(Hp.init!=0) {
+            for (i = 0; i < N; i++) {
+                for (alpha = 0; alpha < 3; alpha++) {
+                    Site[i].Psi[alpha].r = 1;
+                    Site[i].Psi[alpha].t = rn::uniform_real_box(0, C_TWO_PI);
+                    polar_to_cartesian(Site[i].Psi[alpha]);
+                }
+            }
+        }
+
     }
 
 }

@@ -11,13 +11,14 @@ import scipy.integrate as integrate
 import random
 import h5py
 
-beta_low=0.5
-beta_high=5.0
+beta_low=0.35
+beta_high=0.55
 nbeta=32
 e=0.
-h=2
-nu=1.
-L=[8,10, 12]
+h=1
+nu=0.
+eta=0
+L=[8,10]
 #, 16, 20]
 
 #beta_low=float(sys.argv[1])
@@ -29,7 +30,7 @@ L=[8,10, 12]
 if( (nu).is_integer()): nu=int(nu)
 if( (e).is_integer()): e=int(e)
 
-folder_out=("/Users/ilaria/Desktop/MultiComponents_SC/Output_3C/e_%s/nu_%s/h_%s" %(e, nu, h))
+folder_out=("/Users/ilaria/Desktop/3Component_LondonModel/Output_3C/e_%s/nu_%s/h_%s" %(e, nu, h))
 transient=0.5
 
 #L=[]
@@ -124,7 +125,7 @@ for l in range(len(L)):
 	D2H_Dd2ij_mean2=np.zeros((NC, nbeta))
 
 	c_m=next(color)
-	BASEDIR=("%s/L%d_a0_b1_eta1_e%s_h%s_nu%s_bmin%s_bmax%s"  %(folder_out, L[l], e,  h, nu, beta_low, beta_high))
+	BASEDIR=("%s/L%d_rho1_eta%s_e%s_h%s_nu%s_bmin%s_bmax%s"  %(folder_out, L[l], eta, e,  h, nu, beta_low, beta_high))
     
 	for b in range(nbeta):
 		beta[b]=beta_low +b*(beta_high -beta_low)/(nbeta-1)
