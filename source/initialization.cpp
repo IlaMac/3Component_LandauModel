@@ -85,7 +85,7 @@ void initialize_lattice(struct Node* Site, const fs::path & directory_read, int 
     }else{
         for(i=0; i<N; i++){
             for(alpha=0; alpha<3; alpha++){
-                Site[i].Psi[alpha].r=sqrt(Hp.rho);
+                Site[i].Psi[alpha].r=1.;
                 Site[i].Psi[alpha].t=0.;
                 polar_to_cartesian(Site[i].Psi[alpha]);
             }
