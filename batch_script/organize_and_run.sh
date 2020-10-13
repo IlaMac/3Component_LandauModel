@@ -15,16 +15,16 @@ fi
 
 RESTART=0
 
-LLIST="8 10 12"
+LLIST="8 10 12 16 20"
 ############ Parameters of the Hamiltonian ---> HP_init.txt in a directory whose name contains the main parameters values##################
 H_rho=1
 H_eta=0
 H_e=0
 H_h=1
 H_nu=0
-H_blow=1.0
-H_bhigh=5.0
-H_init=0 #If H_init=0: phases initialized to zero; H_init=1: phases initialized randomly
+H_blow=0.35
+H_bhigh=0.45
+H_init=1 #If H_init=0: phases initialized to zero; H_init=1: phases initialized randomly
 
 ############ Parameters for the Monte Carlo simulations --> MC_init.txt#####################
 
@@ -112,8 +112,8 @@ echo $A_box >> MC_init.txt
 #################Creation of the submit_runs script#########################
 
 jobname="L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}_init${H_init}"
-nnodes=1
-ntasks=32 #parallel tempering over ntasks temperatures
+nnodes=2
+ntasks=64 #parallel tempering over ntasks temperatures
 
 #I create ntasks folder: one for each rank.
 
@@ -155,7 +155,6 @@ echo "#!/bin/bash
 #SBATCH --ntasks=${ntasks}
 #SBATCH --output=${DIR_PAR}/logs/log_${jobname}.o
 #SBATCH --error=${DIR_PAR}/logs/log_${jobname}.e
-#SBATCH --qos=urgent
 
 srun ${EXECUTE_DIR}/LondonModel_3component ${L} ${DIR_PAR} ${DIR_PAR} ${RESTART} &> ${DIR_PAR}/logs/log_${jobname}.o
 

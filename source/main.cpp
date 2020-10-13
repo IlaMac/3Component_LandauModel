@@ -186,7 +186,7 @@ int main(int argc, char *argv[]){
 void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters &Hp, double &my_beta, int &my_ind, struct PT_parameters PTp, struct PTroot_parameters PTroot, std::string directory_parameters_temp, int NSTART) {
 
     int n, t;
-    int n_save=10;//Number of spin configurations I want to save
+    double inv_n_save= 1./2;//Inverse number of spin configurations I want to save
     class_tic_toc t_h5pp(true,5,"Benchmark h5pp");
     class_tic_toc t_metropolis(true,5,"Benchmark metropolis");
     class_tic_toc t_measures(true,5,"Benchmark measures");
@@ -261,7 +261,7 @@ void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters 
 
         //Save a configuration for the restarting
         save_lattice(Site, directory_write_temp, std::string("restart"));
-	if((n%(MCp.nmisu/n_save))==0){
+	if((n%((int)(MCp.nmisu*inv_n_save)))==0){
 	save_lattice(Site, directory_write_temp, std::string("n") + std::to_string(n));
 	}
 	//Parallel Tempering swap
