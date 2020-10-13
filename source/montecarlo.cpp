@@ -30,8 +30,9 @@ void metropolis( struct Node* Site, struct MC_parameters &MCp, struct H_paramete
                     //t_localHtheta.toc();
                     d_theta = rn::uniform_real_box(-MCp.lbox_theta, MCp.lbox_theta);
                     NewPsi.t = fmod(OldPsi.t + d_theta, C_TWO_PI);
-                    NewPsi.r = OldPsi.r;
-                    polar_to_cartesian(NewPsi);
+                    NewPsi.r=1;
+                    //NewPsi.r = OldPsi.r;
+                    //polar_to_cartesian(NewPsi);
                     //t_localHtheta.tic();
                     newE = local_Htheta(NewPsi, ix, iy, iz, alpha, Hp, Site);
                     //t_localHtheta.toc();

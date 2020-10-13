@@ -133,7 +133,7 @@ void magnetization(struct Measures &mis, struct Node* Site){
 
     for(iz=0; iz<Lz;iz++) {
         for (iy = 0; iy < Ly; iy++) {
-            for (ix = 0; iz < Lx; ix++) {
+            for (ix = 0; ix < Lx; ix++) {
                 i=ix +Lx*(iy+Ly*iz);
                 for(alpha=1; alpha<3; alpha++){
                     phi_shifted[alpha]=Site[i].Psi[alpha].t - Site[i].Psi[0].t;
