@@ -17,9 +17,9 @@ void metropolis( struct Node* Site, struct MC_parameters &MCp, struct H_paramete
     class_tic_toc t_localHA(true,5,"local_HA");
 
 
-    for (ix= 0; ix < Lx; ix++) {
+    for (iz= 0; iz < Lz; iz++) {
         for (iy = 0; iy < Ly; iy++) {
-            for (iz = 0; iz < Lz; iz++) {
+            for (ix = 0; ix < Lx; ix++) {
                 i = ix + Lx * (iy + iz * Ly);
 
                 /*******PHASE ONLY UPDATE**************/
@@ -105,21 +105,21 @@ double local_Htheta(struct O2 Psi, unsigned int ix, unsigned int iy, unsigned in
 
         gauge_phase1=Site[nn(i, vec, 1)].Psi[alpha].t - Psi.t + Hp.h*Hp.e*Site[i].A[vec];
         gauge_phase2=Psi.t -Site[nn(i, vec, -1)].Psi[alpha].t + Hp.h*Hp.e*Site[nn(i, vec, -1)].A[vec];
-        h_Kinetic-=(1./h2)*(Psi.r*Site[nn(i, vec, 1)].Psi[alpha].r)*cos(gauge_phase1);
-        h_Kinetic-=(1./h2)*(Psi.r*Site[nn(i, vec, -1)].Psi[alpha].r)*cos(gauge_phase2);
+        h_Kinetic-=(1./h2)*cos(gauge_phase1);
+        h_Kinetic-=(1./h2)*cos(gauge_phase2);
 
        //Andreev-Bashkin term = \sum_beta!=alpha \sum_k=1,2,3 -nu*J^k_alpha*J^k_beta;
         // with J^k_alpha= |Psi_{alpha}(r)||Psi_{alpha}(r+k)|* sin(theta_{alpha}(r+k) - theta_{alpha}(r) +h*e*A_k(r)))
         if(Hp.nu !=0 ) {
 
-        J_alpha1= (1./Hp.h)*(Psi.r*Site[nn(i, vec, 1)].Psi[alpha].r)*sin(gauge_phase1);
-        J_alpha2= (1./Hp.h)*(Psi.r*Site[nn(i, vec, -1)].Psi[alpha].r)*sin(gauge_phase2);
+        J_alpha1= (1./Hp.h)*sin(gauge_phase1);
+        J_alpha2= (1./Hp.h)*sin(gauge_phase2);
 
         for (beta = 0; beta < 3; beta++) {
                 if (beta != alpha) {
-                J_beta1=(1./Hp.h)*(Site[i].Psi[beta].r*Site[nn(i, vec, 1)].Psi[beta].r)*sin(Site[nn(i, vec, 1)].Psi[beta].t - Site[i].Psi[beta].t + Hp.h*Hp.e*Site[i].A[vec]);
+                J_beta1=(1./Hp.h)*sin(Site[nn(i, vec, 1)].Psi[beta].t - Site[i].Psi[beta].t + Hp.h*Hp.e*Site[i].A[vec]);
                 h_AB -= Hp.nu *(J_alpha1*J_beta1);
-                J_beta2=(1./Hp.h)*(Site[i].Psi[beta].r*Site[nn(i, vec, -1)].Psi[beta].r)*sin( Site[i].Psi[beta].t -Site[nn(i, vec, -1)].Psi[beta].t + Hp.h*Hp.e*Site[nn(i, vec, -1)].A[vec]);
+                J_beta2=(1./Hp.h)*sin( Site[i].Psi[beta].t -Site[nn(i, vec, -1)].Psi[beta].t + Hp.h*Hp.e*Site[nn(i, vec, -1)].A[vec]);
                 h_AB -= Hp.nu * (J_alpha2 *J_beta2);
                 	}
         	}
@@ -129,7 +129,7 @@ double local_Htheta(struct O2 Psi, unsigned int ix, unsigned int iy, unsigned in
     //Josephson= eta* \sum_beta!=alpha |Psi_{alpha}(r)||Psi_{beta}(r)|* cos(theta_{alpha}(r) - theta_{beta}(r))
     for(beta=0; beta<3; beta++){
 	if(beta != alpha) {
-            h_Josephson += (Hp.eta * O2prod(Psi, Site[i].Psi[beta]));
+            h_Josephson += (Hp.eta * cos(Psi.t- Site[i].Psi[beta].t));
         }
     }
 

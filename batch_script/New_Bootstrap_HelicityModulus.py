@@ -11,6 +11,7 @@ import scipy.integrate as integrate
 import random
 import h5py
 
+
 folder_out=sys.argv[1]
 beta_low=float(sys.argv[2])
 beta_high=float(sys.argv[3])
@@ -23,10 +24,24 @@ if( (nu).is_integer()): nu=int(nu)
 if( (e).is_integer()): e=int(e)
 #if( (h).is_integer()): h=int(h)
 
-print("Helicity %s" %h)
+
 L=[]
 for ind in range(9, len(sys.argv)):
     L.append(int(sys.argv[ind]))
+
+#if( (h).is_integer()): h=int(h)
+
+#beta_low=1.46
+#beta_high=1.55
+#nbeta=64
+#e=0
+#h=1
+#nu=0
+#
+#L=([8, 10, 12, 16, 20])
+#
+#folder_out=("/Users/ilaria/Desktop/MultiComponents_SC/Output_3C/e_%s/nu_%s/h_%s" %(e, nu, h))
+#
 
 beta=np.zeros((nbeta))
 
@@ -75,14 +90,14 @@ for l in range(len(L)):
     N_dataset=100
 
     BASEDIR=("%s/L%d_rho1_eta%s_e%s_h%s_nu%s_bmin%s_bmax%s"  %(folder_out, L[l], eta, e,  h, nu, beta_low, beta_high))
-    
+    print(BASEDIR)
     data_tau_max=np.loadtxt("%s/tau_max.txt" %BASEDIR, dtype=np.str)
     tau_max=np.amax(np.array(data_tau_max[1], dtype=np.float))
     
-    tau_max=500
-
     data_transient_time=np.loadtxt("%s/transient_time.txt" %BASEDIR, dtype=np.str)
     transient_time=int(np.amax(np.array(data_transient_time[1], dtype=np.float)))
+
+    print(L[l], tau_max, transient_time)
 
     for b in range(nbeta):
         beta[b]=beta_low +b*(beta_high -beta_low)/(nbeta-1)
@@ -101,7 +116,6 @@ for l in range(len(L)):
         for alpha in range(NC):
             DH_Dd=h3*DH_Ddi[:,alpha]
             D2H_Dd2=h3*D2H_Dd2i[:,alpha]
-
 
             #cut of the transient regime
             DH_Dd=DH_Dd[transient_time:]
@@ -154,8 +168,8 @@ for l in range(len(L)):
             D2H_Dd2_err[alpha, b]=np.mean(stdD2H_Dd2_resampling)
 
             #For the moment I consider DH_Dd_mean to be just zero as it should be at the equilibrium
-            Helicity_single_mean[alpha, b]= 1./(N*h3) *(D2H_Dd2_mean[alpha, b] - (beta[b])*(DH_Dd_2_mean[alpha, b] - DH_Dd_mean[alpha, b]**2) )
-            Helicity_single_err[alpha, b]= 1./(N*h3) *np.sqrt(D2H_Dd2_err[alpha, b]**2 + (beta[b]*DH_Dd_2_err[alpha, b])**2 )
+            Helicity_single_mean[alpha, b]= 1./(N*h3) *(D2H_Dd2_mean[alpha, b] - (beta[b])*(DH_Dd_2_mean[alpha, b] - (DH_Dd_mean[alpha, b]**2) ) )
+            Helicity_single_err[alpha, b]= 1./(N*h3) *np.sqrt(D2H_Dd2_err[alpha, b]**2 + (beta[b]*DH_Dd_2_err[alpha, b])**2 + (2*beta[b]*DH_Dd_err[alpha, b])**2 )
 
     #####################################################################################
     #                                                                                   #
@@ -209,7 +223,7 @@ for l in range(len(L)):
             Helicity_mixed_err[alpha, b]= 1./(N*h3) *np.sqrt( D2H_Dd2ij_err[alpha, b]**2 + (beta[b]*DH_Ddij_err[alpha,b])**2 )
 
         Helicity_sum_mean[b]+= Helicity_single_mean[alpha,b] +2*Helicity_mixed_mean[alpha, b]
-        Helicity_sum_err_2[b]+=( Helicity_single_err[alpha,b]**2 + 4*Helicity_mixed_err[alpha, b])
+        Helicity_sum_err_2[b]+=( Helicity_single_err[alpha,b]**2 + 4*Helicity_mixed_err[alpha, b]**2)
 
         Helicity_sum_err[b]=np.sqrt(Helicity_sum_err_2[b])
 
@@ -224,6 +238,11 @@ for l in range(len(L)):
     data_helicity_mixedc=np.array([beta, Helicity_mixed_mean[0,:], Helicity_mixed_err[0,:], Helicity_mixed_mean[1,:], Helicity_mixed_err[1,:], Helicity_mixed_mean[2,:], Helicity_mixed_err[2,:]])
     data_helicity_mixedc=np.transpose(data_helicity_mixedc)
     np.savetxt("%s/Helicity_modulus_mixedcomponents.txt" %(BASEDIR), data_helicity_mixedc, fmt=['%lf','%lf', '%lf','%lf', '%lf','%lf', '%lf'])
+
+    data_currents=np.array([beta, DH_Dd_mean[0,:], DH_Dd_err[0,:], DH_Dd_mean[1,:], DH_Dd_err[1,:], DH_Dd_mean[2,:], DH_Dd_err[2,:]])
+    data_currents=np.transpose(data_currents)
+    np.savetxt("%s/Currents.txt" %(BASEDIR), data_currents, fmt=['%lf','%lf', '%lf','%lf', '%lf','%lf', '%lf'])
+
 
     ax1.errorbar(beta, L[l]*float(h)*Helicity_sum_mean, yerr= Helicity_sum_err, capsize=2, c=c_m)
 

@@ -23,11 +23,11 @@ void energy(struct Measures &mis, struct H_parameters &Hp, double my_beta, struc
                     for (vec = 0; vec < 3; vec++) {
                         gauge_phase=Site[nn(i, vec, 1)].Psi[alpha].t - Site[i].Psi[alpha].t + Hp.h*Hp.e*Site[i].A[vec];
                         //h_Kinetic -= (1. / h2) * O2prod(Site[i].Psi[alpha], NN_Site[i].Psi_plusk[alpha +3*vec]);
-                        h_Kinetic -= (1. / h2) * (Site[i].Psi[alpha].r*Site[nn(i, vec, -1)].Psi[alpha].r)*cos(gauge_phase) ;
+                        h_Kinetic -= (1. / h2) *cos(gauge_phase) ;
                     }
                     for (vec = alpha+1; vec < 3; vec++) {
                         //Josephson= eta* \sum_beta!=alpha |Psi_{alpha}(r)||Psi_{beys}(r)|* cos(theta_{alpha}(r) - theta_{beta}(r))
-                        h_Josephson += (Hp.eta * O2prod(Site[i].Psi[alpha], Site[i].Psi[vec]));
+                        h_Josephson += (Hp.eta * cos(Site[i].Psi[alpha].t -  Site[i].Psi[vec].t));
                         if (Hp.e != 0) {
                             //F_{alpha,vec}= A_alpha(r_i) + A_vec(ri+alpha) - A_alpha(r_i+vec) - A_vec(ri)
                             F_A = (Site[i].A[alpha] + Site[nn(i, alpha, 1)].A[vec] - Site[nn(i, vec, 1)].A[alpha] -
@@ -43,9 +43,9 @@ void energy(struct Measures &mis, struct H_parameters &Hp, double my_beta, struc
                         gauge_phase_0=Site[nn(i, vec, 1)].Psi[0].t - Site[i].Psi[0].t + Hp.h*Hp.e*Site[i].A[vec];
                         gauge_phase_1=Site[nn(i, vec, 1)].Psi[1].t - Site[i].Psi[1].t + Hp.h*Hp.e*Site[i].A[vec];
                         gauge_phase_2=Site[nn(i, vec, 1)].Psi[2].t - Site[i].Psi[2].t + Hp.h*Hp.e*Site[i].A[vec];
-                        J_0 = (1. / Hp.h) *(Site[i].Psi[0].r*Site[nn(i, vec, 1)].Psi[0].r)*sin(gauge_phase_0);
-                        J_1 = (1. / Hp.h) *(Site[i].Psi[1].r*Site[nn(i, vec, 1)].Psi[1].r)*sin(gauge_phase_1);
-                        J_2 = (1. / Hp.h) *(Site[i].Psi[2].r*Site[nn(i, vec, 1)].Psi[2].r)*sin(gauge_phase_2);
+                        J_0 = (1. / Hp.h) *sin(gauge_phase_0);
+                        J_1 = (1. / Hp.h) *sin(gauge_phase_1);
+                        J_2 = (1. / Hp.h) *sin(gauge_phase_2);
                         h_AB -= Hp.nu * ( (J_0*J_1) + (J_0*J_2) + (J_1*J_2) );
                     }
                 }
@@ -76,8 +76,8 @@ void helicity_modulus(struct Measures &mis, struct H_parameters &Hp, struct Node
                 for(alpha=0; alpha<NC; alpha++){
                     gauge_phase1=Site[nn(i, vec, 1)].Psi[alpha].t - Site[i].Psi[alpha].t + Hp.h*Hp.e*Site[i].A[vec];
 
-                    J_alpha=(1. / Hp.h)*(Site[i].Psi[alpha].r*Site[nn(i, vec, 1)].Psi[alpha].r)*sin(gauge_phase1);
-                    DJ_alpha_Dd=(1./Hp.h)*(Site[i].Psi[alpha].r*Site[nn(i, vec, 1)].Psi[alpha].r)*cos(gauge_phase1);
+                    J_alpha=(1. / Hp.h)*sin(gauge_phase1);
+                    DJ_alpha_Dd=(1./Hp.h)*cos(gauge_phase1);
 
                     mis.DH_Ddi[alpha] += ((1. / Hp.h) * J_alpha);
                     mis.D2H_Dd2i[alpha]+= ((1. / Hp.h)*DJ_alpha_Dd ) ;
@@ -85,10 +85,10 @@ void helicity_modulus(struct Measures &mis, struct H_parameters &Hp, struct Node
                     for(beta=0; beta<NC; beta++) {
                         if(beta !=alpha ){
                             gauge_phase2=Site[nn(i, vec, 1)].Psi[beta].t - Site[i].Psi[beta].t + Hp.h*Hp.e*Site[i].A[vec];
-                            J_beta= (1./Hp.h)*(Site[i].Psi[beta].r*Site[nn(i, vec, 1)].Psi[beta].r)*sin(gauge_phase2);
+                            J_beta= (1./Hp.h)*sin(gauge_phase2);
                             mis.DH_Ddi[alpha] -= ( Hp.nu *J_beta*DJ_alpha_Dd );
                             mis.D2H_Dd2i[alpha]+=( Hp.nu *J_beta*J_alpha );
-                            DJ_beta_Dd=(1./Hp.h)*(Site[i].Psi[beta].r*Site[nn(i, vec, 1)].Psi[beta].r)*cos(gauge_phase2);
+                            DJ_beta_Dd=(1./Hp.h)*cos(gauge_phase2);
                             mis.D2H_Dd2ij[alpha]+= (-Hp.nu*(DJ_alpha_Dd*DJ_beta_Dd));
                         }
                     }
@@ -131,9 +131,9 @@ void magnetization(struct Measures &mis, struct Node* Site){
     std::vector <double> phi_shifted;
     phi_shifted.resize(2,0.);
 
-    for(ix=0; ix<Lx;ix++) {
+    for(iz=0; iz<Lz;iz++) {
         for (iy = 0; iy < Ly; iy++) {
-            for (iz = 0; iz < Lx; iz++) {
+            for (ix = 0; iz < Lx; ix++) {
                 i=ix +Lx*(iy+Ly*iz);
                 for(alpha=1; alpha<3; alpha++){
                     phi_shifted[alpha]=Site[i].Psi[alpha].t - Site[i].Psi[0].t;
