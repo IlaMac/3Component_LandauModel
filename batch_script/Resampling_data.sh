@@ -21,7 +21,7 @@ nbeta=32
 
 #LList="\"[[8] [10]]\""
 
-LList=("8 10 12 16 20")
+LList=("8 10 12")
 
 BASEDIR="/Users/ilaria/Desktop/3Component_LondonModel/Output_3C/e_${H_e}/nu_${H_nu}/h_${H_h}"
 #BASEDIR="/Users/ilaria/Desktop/New_Test/Output_3C/e_${H_e}/nu_${H_nu}"

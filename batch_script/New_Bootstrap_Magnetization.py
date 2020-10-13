@@ -108,6 +108,7 @@ for l in range(len(L)):
 
 ax1[0].legend(loc="best")
 plt.tight_layout()
+plt.show()
 plt.savefig("%s/Magnetization_h%s_bmin%s_bmax%s.png" %(folder_out, h, beta_low, beta_high))
 
 

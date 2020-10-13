@@ -244,7 +244,7 @@ for l in range(len(L)):
     np.savetxt("%s/Currents.txt" %(BASEDIR), data_currents, fmt=['%lf','%lf', '%lf','%lf', '%lf','%lf', '%lf'])
 
 
-    ax1.errorbar(beta, L[l]*float(h)*Helicity_sum_mean, yerr= Helicity_sum_err, capsize=2, c=c_m)
+    ax1.errorbar(beta, Helicity_single_mean[0,:], yerr= Helicity_sum_err, capsize=2, c=c_m)
 
 fig.savefig("%s/Helicity_modulus_sum_h%s_bmin%s_bmax%s.png" %(folder_out, h, beta_low, beta_high))
 plt.show()
