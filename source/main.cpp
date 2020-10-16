@@ -222,6 +222,7 @@ void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters 
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "E_B", HOFFSET(Measures, E_B), H5T_NATIVE_DOUBLE);
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "E_AB", HOFFSET(Measures, E_AB), H5T_NATIVE_DOUBLE);
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "m", HOFFSET(Measures, m), H5T_NATIVE_DOUBLE);
+    H5Tinsert(MY_HDF5_MEASURES_TYPE, "m_phase", HOFFSET(Measures, m_phase),  HDF5_RHO_TYPE);
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "ds", HOFFSET(Measures, d_rhoz), H5T_NATIVE_DOUBLE);
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "DH_Ddi", HOFFSET(Measures, DH_Ddi), HDF5_RHO_TYPE);
     H5Tinsert(MY_HDF5_MEASURES_TYPE, "D2H_Dd2i", HOFFSET(Measures, D2H_Dd2i), HDF5_RHO_TYPE);
@@ -247,6 +248,7 @@ void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters 
         }
         helicity_modulus(mis, Hp, Site);
         magnetization(mis, Site);
+        magnetization_singlephase(mis, Site);
         mis.my_rank=PTp.rank;
         t_measures.toc();
 
