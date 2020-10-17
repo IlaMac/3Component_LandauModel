@@ -39,6 +39,6 @@ void magnetization(struct Measures &mis, struct Node* Site);
 void magnetization_singlephase(struct Measures &mis, struct Node* Site);
 void energy(struct Measures &mis, struct H_parameters &Hp, double my_beta, struct Node* Site);
 void save_lattice(struct Node* Site, const fs::path & directory_write, std::string configuration);
-
+void all_measures(struct Measures &mis, struct H_parameters &Hp, double my_beta, struct Node* Site);
 
 #endif //MEASURES_H

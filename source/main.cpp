@@ -242,13 +242,16 @@ void mainloop(struct Node* Site, struct MC_parameters &MCp, struct H_parameters 
         //Measures
         t_measures.tic();
         mis.reset();
-    	energy(mis, Hp, my_beta, Site);
+        all_measures(mis, Hp, my_beta, Site);
+
+        /*energy(mis, Hp, my_beta, Site);
     	if(Hp.e!=0) {
             dual_stiffness(mis, Hp, Site);
         }
         helicity_modulus(mis, Hp, Site);
         magnetization(mis, Site);
-        magnetization_singlephase(mis, Site);
+        magnetization_singlephase(mis, Site);*/
+
         mis.my_rank=PTp.rank;
         t_measures.toc();
 
