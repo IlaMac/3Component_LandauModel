@@ -139,7 +139,7 @@ double local_Htheta(struct O2 Psi, unsigned int ix, unsigned int iy, unsigned in
                 if (beta != alpha) {
                 J_beta1=inv_h*sin(Site[nn_ip].Psi[beta].t - Site[i].Psi[beta].t + Hp.h*Hp.e*Site[i].A[vec]);
                 h_AB -= Hp.nu *(J_alpha1*J_beta1);
-                J_beta2=inv_h*sin( Site[i].Psi[beta].t -Site[nn_ip].Psi[beta].t + Hp.h*Hp.e*Site[nn_im].A[vec]);
+                J_beta2=inv_h*sin( Site[i].Psi[beta].t -Site[nn_im].Psi[beta].t + Hp.h*Hp.e*Site[nn_im].A[vec]);
                 h_AB -= Hp.nu * (J_alpha2 *J_beta2);
                 	}
         	}
@@ -213,7 +213,7 @@ double local_HA(double A, unsigned int ix, unsigned int iy, unsigned int iz,  un
         J_beta= inv_h * Site[nn_ip].Psi[1].r*Site[i].Psi[1].r*sin(Site[nn_ip].Psi[1].t - Site[i].Psi[1].t + Hp.h*Hp.e*A);
         J_gamma= inv_h * Site[nn_ip].Psi[2].r*Site[i].Psi[2].r*sin(Site[nn_ip].Psi[2].t - Site[i].Psi[2].t + Hp.h*Hp.e*A);
 
-        h_AB += Hp.nu * (pow((J_alpha - J_beta), 2)  + pow((J_alpha - J_gamma), 2) + pow((J_gamma - J_beta), 2));
+        h_AB -= Hp.nu *( (J_alpha*J_beta)  + (J_alpha *J_gamma)+ (J_gamma*J_beta));
     }
 
     //All the plaquettes involving A_vec(i)

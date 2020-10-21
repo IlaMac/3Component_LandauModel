@@ -220,7 +220,7 @@ void energy(struct Measures &mis, struct H_parameters &Hp, double my_beta, struc
                         J_0 = inv_h *sin(gauge_phase_0);
                         J_1 = inv_h *sin(gauge_phase_1);
                         J_2 = inv_h *sin(gauge_phase_2);
-                        h_AB -= inv_h * ( (J_0*J_1) + (J_0*J_2) + (J_1*J_2) );
+                        h_AB -= Hp.nu * ( (J_0*J_1) + (J_0*J_2) + (J_1*J_2) );
                     }
                 }
             }

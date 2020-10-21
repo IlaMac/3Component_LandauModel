@@ -18,13 +18,13 @@ RESTART=0
 LLIST="8 10 12 16 20"
 ############ Parameters of the Hamiltonian ---> HP_init.txt in a directory whose name contains the main parameters values##################
 H_rho=1
-H_eta=0
+H_eta=5
 H_e=0
 H_h=1
 H_nu=0
-H_blow=0.35
-H_bhigh=0.45
-H_init=1 #If H_init=0: phases initialized to zero; H_init=1: phases initialized randomly
+H_blow=0.29
+H_bhigh=0.31
+H_init=0 #If H_init=0: phases initialized to zero; H_init=1: phases initialized randomly
 
 ############ Parameters for the Monte Carlo simulations --> MC_init.txt#####################
 
@@ -38,7 +38,7 @@ for L in $LLIST; do
 
 ############Creation of the output folder and of the two files of initialization####################
 
-cd ${BASEDIR}/Output_3C
+cd ${BASEDIR}/Output_London_3C
 
 if [ ! -d ./Se_${H_e} ]; then
    mkdir -p e_${H_e}
@@ -62,7 +62,7 @@ if [ ! -d ./SL${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blo
    mkdir -p L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}_init${H_init}
 fi
 
-OUTPUT=${BASEDIR}/Output_3C/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}_init${H_init}
+OUTPUT=${BASEDIR}/Output_London_3C/e_${H_e}/nu_${H_nu}/h_${H_h}/L${L}_rho${H_rho}_eta${H_eta}_e${H_e}_h${H_h}_nu${H_nu}_bmin${H_blow}_bmax${H_bhigh}_init${H_init}
 
 cd /tmp/Output_x_ilaria
 
